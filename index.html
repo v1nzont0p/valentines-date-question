@@ -144,6 +144,77 @@
             position: fixed;
             pointer-events: none;
         }
+
+        @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+
+            .container {
+                padding: 40px 20px;
+                max-width: 90%;
+                margin: 0 auto;
+            }
+
+            h1 {
+                font-size: 32px;
+                margin-bottom: 15px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+
+            button {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+
+            .buttons {
+                gap: 10px;
+            }
+
+            .message {
+                font-size: 20px;
+            }
+
+            img {
+                max-width: 100% !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 15px;
+                max-width: 95%;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .buttons {
+                gap: 8px;
+                flex-direction: column;
+            }
+
+            .heart {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
