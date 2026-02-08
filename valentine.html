@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 50%, #ff69b4 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.6;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-30px) translateX(20px);
+                opacity: 0.8;
+            }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #ff1493;
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.4);
+        }
+
+        .no-btn {
+            background: #ddd;
+            color: #333;
+        }
+
+        .no-btn:hover {
+            transform: translateX(20px);
+            background: #ccc;
+        }
+
+        .message {
+            display: none;
+            margin-top: 30px;
+            font-size: 24px;
+            color: #ff1493;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+
+    <!-- Intro Page -->
+    <div class="container" id="introPage">
+        <h1>So Valentine's is Coming Around Labidabidabs, so... 💕</h1>
+        
+        <div class="buttons">
+            <button class="yes-btn" onclick="goToQuestion()">Continue →</button>
+        </div>
+    </div>
+
+    <!-- Main Question Page -->
+    <div class="container" id="questionPage" style="display: none;">
+        <h1>❤️ Will You Be My Valentine labidabidabs? ❤️</h1>
+        <p class="subtitle">you're amazing and would love to spend this day with you.</p>
+        
+        <div class="buttons">
+            <button class="yes-btn" onclick="handleYes()">Yes! 💕</button>
+            <button class="no-btn" onclick="handleNo()">No</button>
+        </div>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <!-- Rejection Page -->
+    <div class="container" id="rejectionPage" style="display: none;">
+        <h1>Ah ayaw mo? 😢</h1>
+        <img src="cat-meme-gato.gif" alt="Cat meme" style="max-width: 100%; height: auto; border-radius: 10px; margin: 20px 0;">
+        
+        <div class="buttons">
+            <button class="yes-btn" onclick="handleGusto()">Gusto na 💕</button>
+            <button class="no-btn" onclick="handleAyaw()">Ayaw</button>
+        </div>
+    </div>
+
+    <!-- Angry Cat Page -->
+    <div class="container" id="angryPage" style="display: none;">
+        <h1>Ah talagang ayaw hmp 😠</h1>
+        <img src="cat-angry-cat.gif" alt="Angry cat" style="max-width: 100%; height: auto; border-radius: 10px; margin: 20px 0;">
+        
+        <div class="buttons">
+            <button class="yes-btn" onclick="handleGustoAgain()">Gusto na 💕</button>
+            <button class="no-btn" onclick="handleAyawTalaga()">Ayaw ko talaga</button>
+        </div>
+    </div>
+
+    <!-- Mad Cat Page -->
+    <div class="container" id="madPage" style="display: none;">
+        <h1>😾 ah talagang ayaw mo?</h1>
+        <img src="cat-mad.gif" alt="Mad cat" style="max-width: 100%; height: auto; border-radius: 10px; margin: 20px 0;">
+        
+        <div class="buttons">
+            <button class="yes-btn" onclick="handleSgeNaGa()">Sge na nga 💕</button>
+            <button class="no-btn" onclick="handleYokoNa()">Yoko nga</button>
+        </div>
+    </div>
+
+    <!-- Success Page -->
+    <div class="container" id="successPage" style="display: none;">
+        <img src="meow.gif" alt="Happy meow cat" style="max-width: 100%; height: auto; border-radius: 10px; margin: 20px 0;">
+        <p class="subtitle">YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY I LOVE YOUUUUUUUUUUUUUUU! 💕</p>
+    </div>
+
+    <script>
+        // Generate floating hearts
+        function generateHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartSymbols = ['❤️', '💕', '💖', '💗'];
+            
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        function handleYes() {
+            document.getElementById('questionPage').style.display = 'none';
+            document.getElementById('successPage').style.display = 'block';
+            createConfetti();
+        }
+
+        function handleNo() {
+            document.getElementById('questionPage').style.display = 'none';
+            document.getElementById('rejectionPage').style.display = 'block';
+        }
+
+        function createConfetti() {
+            const colors = ['#ff1493', '#ff69b4', '#ff6b9d', '#ff85b3'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.textContent = '🎉';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.fontSize = Math.random() * 20 + 15 + 'px';
+                confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.zIndex = '1000';
+                document.body.appendChild(confetti);
+
+                const duration = Math.random() * 2 + 2;
+                confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(360deg)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                });
+
+                setTimeout(() => confetti.remove(), duration * 1000);
+            }
+        }
+
+        generateHearts();
+
+        function goToQuestion() {
+            document.getElementById('introPage').style.display = 'none';
+            document.getElementById('questionPage').style.display = 'block';
+        }
+
+        function handleGusto() {
+            document.getElementById('rejectionPage').style.display = 'none';
+            document.getElementById('questionPage').style.display = 'block';
+        }
+
+        function handleAyaw() {
+            document.getElementById('rejectionPage').style.display = 'none';
+            document.getElementById('angryPage').style.display = 'block';
+        }
+
+        function handleGustoAgain() {
+            document.getElementById('angryPage').style.display = 'none';
+            document.getElementById('questionPage').style.display = 'block';
+        }
+
+        function handleAyawTalaga() {
+            document.getElementById('angryPage').style.display = 'none';
+            document.getElementById('madPage').style.display = 'block';
+        }
+
+        function handleSgeNaGa() {
+            document.getElementById('madPage').style.display = 'none';
+            document.getElementById('questionPage').style.display = 'block';
+        }
+
+        function handleYokoNa() {
+            const madPage = document.getElementById('madPage');
+            madPage.style.transform = 'rotate(' + (Math.random() * 8 - 4) + 'deg)';
+            setTimeout(() => {
+                madPage.style.transform = 'rotate(0deg)';
+            }, 300);
+        }
+    </script>
+</body>
+</html>
